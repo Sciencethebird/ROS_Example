@@ -13,7 +13,7 @@ conda activate ...
 ![](https://i.imgur.com/ZFXzBgP.png)
 
 # 2. spawn_model.py
-
+![](https://i.imgur.com/nuopU41.png)
 
 
 
