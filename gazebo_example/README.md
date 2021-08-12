@@ -1,0 +1,11 @@
+# 1. move_model.py
+```sh
+# 1. launch your cgi-tt racer environment
+conda activate ...
+
+# 2. launch Gazebo world with ramp
+./launch_simulator.sh -w tt_track_carpet_ramp_pos1_trapezoid_with_smooth_multilines -n 1
+
+# 3.run python
+python move_model.py
+```
