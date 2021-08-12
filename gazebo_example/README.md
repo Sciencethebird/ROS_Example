@@ -13,6 +13,7 @@ conda activate ...
 ![](https://i.imgur.com/ZFXzBgP.png)
 
 # 2. spawn_model.py
+- Spawns a new ramp with name "lul" and delete original ramp
 ![](https://i.imgur.com/nuopU41.png)
 
 
