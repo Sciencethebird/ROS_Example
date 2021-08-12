@@ -1,15 +1,24 @@
+'''
+Modyfied from https://github.com/ipa320/srs_public/blob/master/srs_user_tests/ros/scripts/spawn_object.py
+This Code will delete original ramp in "tt_track_carpet_ramp_pos1_trapezoid_with_smooth_multilines"
+and spawn a new ramp with name "lul"
+'''
 import time
 import rospy
-from gazebo_msgs.srv import DeleteModel, SpawnModel, SpawnModelRequest
+from gazebo_msgs.srv import DeleteModel, SpawnModel, DeleteModelRequest, SpawnModelRequest
 from geometry_msgs.msg import *
 
 if __name__ == '__main__':
-    print("Waiting for gazebo services...")
+
+    # ROS node init
     rospy.init_node("spawn_products_in_bins")
-    rospy.wait_for_service("/gazebo/delete_model")
+
+    '''
+    Model Spawning 
+    '''
+
+    # ROS spawning service
     rospy.wait_for_service("/gazebo/spawn_sdf_model")
-    print("Got it.")
-    delete_model = rospy.ServiceProxy("/gazebo/delete_model", DeleteModel)
     spawn_model = rospy.ServiceProxy("/gazebo/spawn_sdf_model", SpawnModel)
 
     # Model Spawning
@@ -27,15 +36,41 @@ if __name__ == '__main__':
     object_pose.orientation.w = 1
 
     req = SpawnModelRequest()
-    req.model_name = "lul" # name of your model in Gazebo
+    name = "lul"
+    req.model_name = name # name of your model in Gazebo
     req.model_xml = object_xml
     req.initial_pose = object_pose
-    print(f"Spawning model: {req.model_name}")
+    print(f"Spawning model: {name}")
     
-    spawn_model(req)
+    res = spawn_model(req)
+    # evaluate response
+    if res.success == True:
+    	rospy.loginfo(res.status_message + " " + name)
+    else:
+    	print (f"Error: model {name} not spawn. error message = {res.status_message}")
 
+    
+    # Temp Stop
     time.sleep(5)
 
-    # deleting model
-    
+
+    '''
+    Model Deleting
+    '''
+    # Model Deleting Service
+    rospy.wait_for_service("/gazebo/delete_model")
+    delete_model = rospy.ServiceProxy("/gazebo/delete_model", DeleteModel)
+    srv_delete_model = rospy.ServiceProxy('gazebo/delete_model', DeleteModel)
+
+    name = "ramp"
+    req = DeleteModelRequest()
+    req.model_name = name
+    res = srv_delete_model(name)
+    if res.success == True:
+        rospy.loginfo(f"Model '{name}' successfully deleted")
+    else:
+        rospy.loginfo(f"Model '{name}' does not exist in gazebo.")
+        
+        
+
 
