@@ -1,6 +1,5 @@
 # Launch Gazebo World
 ```sh
-```sh
 # 1. launch your cgi-tt racer environment
 conda activate ...
 
