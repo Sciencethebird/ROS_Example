@@ -9,3 +9,5 @@ conda activate ...
 # 3.run python
 python move_model.py
 ```
+![](https://i.imgur.com/ZFXzBgP.png)
+
